@@ -1,10 +1,10 @@
 <?php
 
 //starting session
-session_start();
+  session_start();
 
       //creating constants
-      define('SITEURL','http://localhost/food-order/');
+     define('SITEURL','http://localhost:8080/php-resturant/');
       define('LOCALHOST','localhost');
       define('DB_USERNAME','root');
       define('DB_PASSWORD','');

@@ -4,6 +4,13 @@
         <h1>Add Admin</h1>
 
         <br><br>
+        <?php
+        if(isset($_SESSION['add']))//checking session
+        {
+            echo $_SESSION['add'];//displaying session
+            unset($_SESSION['add']);//removing session
+        }
+        ?>
         <form action=""method="POST">
             <table class="tbl-30">
                 <tr>
