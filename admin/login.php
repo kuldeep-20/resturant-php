@@ -15,9 +15,11 @@
         echo $_SESSION['login'];
         unset ($_SESSION['login']);
     }
-
-
-
+    if(isset($_SESSION['no-login-message']))
+    {
+        echo $_SESSION['no-login-message'];
+        unset($_SESSION['no-login-message']);
+    }
     ?>
     <br><br>
 
@@ -49,7 +51,7 @@
 if(isset($_POST['submit']))
 {
     $username = $_POST['username'];
-    $password = $_POST['password'];
+    $password =md5( $_POST['password']);
 
     $sql ="SELECT * FROM tbl_admin WHERE username='$username' AND password ='$password'";
 
@@ -60,12 +62,13 @@ if(isset($_POST['submit']))
     if($count==1)
     {
         $_SESSION['login'] =" <div class='success'>Login Successful.</div>";
+        $_SESSION['user'] = $username;
 
         header('location:'.SITEURL.'admin/');
     }
     else
     {
-        $_SESSION['login'] =" <div class='error'>Login Failed.</div>";
+        $_SESSION['login'] =" <div class='error text-center'>Login Failed.</div>";
 
         header('location:'.SITEURL.'admin/login.php');
 

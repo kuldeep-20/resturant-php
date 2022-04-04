@@ -3,9 +3,17 @@
      <div class="wrapper">
          <h1>Manage Category</h1>
          <br><br>
-             <!--Button to add admin-->
+         
+         <?php
+         if(isset($_SESSION['add'])) 
+          {
+              echo $_SESSION['add'];
+              unset($_SESSION['add']);
+          }
+          ?>
 
-             <a href="#" class="btn-primary">Add Category</a>
+             <!--Button to add admin-->
+             <a href="<?php echo SITEURL; ?>admin/add-category.php" class="btn-primary">Add Category</a>
              <br><br><br>
             <table class = "tbl-full">
                  <tr>
