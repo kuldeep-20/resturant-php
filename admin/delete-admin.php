@@ -1,29 +1,36 @@
-<?php
-//including constant.php
-include('../config/constants.php');
+<?php 
 
-//geting id from admin
-$id=$_GET['id'];
+    //Include constants.php file here
+    include('../config/constants.php');
 
-//creating sql query
-$sql = "DELETE FROM tbl_admin WHERE id=$id";
+    // 1. get the ID of Admin to be deleted
+    $id = $_GET['id'];
 
-//executte query
-$res = mysqli_query($conn,$sql);
+    //2. Create SQL Query to Delete Admin
+    $sql = "DELETE FROM tbl_admin WHERE id=$id";
 
-//checking query is executed or  not
-if($res==true)
-{
-   // echo "admin deleted";
-   //ctreating session
-   $_SESSION['delete'] = "<div class='success'>Admin Deleted Successfully.</div>";
-   //redirect
-   header('location:'.SITEURL.'admin/manage-admin.php');
-}
-else{
-   // echo "failed to delete";
-   $_SESSION['delete'] =  "<div class='error'>Failed to Delete,try again later.</div>";
-   header('location:'.SITEURL.'admin/manage-admin.php');
-}
+    //Execute the Query
+    $res = mysqli_query($conn, $sql);
+
+    // Check whether the query executed successfully or not
+    if($res==true)
+    {
+        //Query Executed Successully and Admin Deleted
+        //echo "Admin Deleted";
+        //Create SEssion Variable to Display Message
+        $_SESSION['delete'] = "<div class='success'>Admin Deleted Successfully.</div>";
+        //Redirect to Manage Admin Page
+        header('location:'.SITEURL.'admin/manage-admin.php');
+    }
+    else
+    {
+        //Failed to Delete Admin
+        //echo "Failed to Delete Admin";
+
+        $_SESSION['delete'] = "<div class='error'>Failed to Delete Admin. Try Again Later.</div>";
+        header('location:'.SITEURL.'admin/manage-admin.php');
+    }
+
+    //3. Redirect to Manage Admin page with message (success/error)
+
 ?>
-<div class="success"></div>

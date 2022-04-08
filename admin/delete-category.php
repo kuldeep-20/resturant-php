@@ -1,51 +1,65 @@
-<?php
+<?php 
+    //Include Constants File
+    include('../config/constants.php');
 
-include('../config/constants.php');
-//echo "delete";
-if(isset($_GET['id']) AND isset($_GET['image_name']))
-{
-    //echo "Get Value and Delete";
-    $id = $_GET['id'];
-    $image_name = $_GET['image_name'];
-
-    if($image_name != "")
+    //echo "Delete Page";
+    //Check whether the id and image_name value is set or not
+    if(isset($_GET['id']) AND isset($_GET['image_name']))
     {
-        $path = "../images/category/".$image_name;
+        //Get the Value and Delete
+        //echo "Get Value and Delete";
+        $id = $_GET['id'];
+        $image_name = $_GET['image_name'];
 
-        $remove = unlike($path);
-
-        if($remove==false)
+        //Remove the physical image file is available
+        if($image_name != "")
         {
-            $_SESSION['remove'] = "<div class='error'>Fail to remove.</div>";
+            //Image is Available. So remove it
+            $path = "../images/category/".$image_name;
+            //REmove the Image
+            $remove = unlink($path);
 
-            header('location:'.SITEURL.'admin/manage-category.php');
-
-            die();
+            //IF failed to remove image then add an error message and stop the process
+            if($remove==false)
+            {
+                //Set the SEssion Message
+                $_SESSION['remove'] = "<div class='error'>Failed to Remove Category Image.</div>";
+                //REdirect to Manage Category page
+                header('location:'.SITEURL.'admin/manage-category.php');
+                //Stop the Process
+                die();
+            }
         }
-    }
-    $sql = "DELETE FROM tbl_category WHERE id=$id";
 
-    $res = mysqli_query($conn, $sql);
+        //Delete Data from Database
+        //SQL Query to Delete Data from Database
+        $sql = "DELETE FROM tbl_category WHERE id=$id";
 
-    if($res==true)
-    {
-        $_SESSION['delete'] = "<div class='success'>Category Deleted Successfully.</div>";
+        //Execute the Query
+        $res = mysqli_query($conn, $sql);
 
-        header('location:'.SITEURL.'admin/manage-category.php');
+        //Check whether the data is delete from database or not
+        if($res==true)
+        {
+            //SEt Success MEssage and REdirect
+            $_SESSION['delete'] = "<div class='success'>Category Deleted Successfully.</div>";
+            //Redirect to Manage Category
+            header('location:'.SITEURL.'admin/manage-category.php');
+        }
+        else
+        {
+            //SEt Fail MEssage and Redirecs
+            $_SESSION['delete'] = "<div class='error'>Failed to Delete Category.</div>";
+            //Redirect to Manage Category
+            header('location:'.SITEURL.'admin/manage-category.php');
+        }
+
+ 
 
     }
     else
     {
-        $_SESSION['delete'] = "<div class='error'>Fail to delete.</div>";
-
+        //redirect to Manage Category Page
         header('location:'.SITEURL.'admin/manage-category.php');
     }
-
-}
-else
-{
-    header('location:'.SITEURL.'admin/manage-category.php');
-
-}
-
 ?>
